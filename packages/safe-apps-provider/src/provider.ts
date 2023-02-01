@@ -47,9 +47,9 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
           throw new Error('The address or message hash is invalid');
         }
 
-        await this.sdk.txs.signMessage(message);
-
-        return '0x';
+        const response = await this.sdk.txs.signMessage(message);
+        const signature = 'signature' in response ? response.signature : undefined;
+        return signature || '0x';
       }
 
       case 'eth_sign': {
@@ -59,9 +59,9 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
           throw new Error('The address or message hash is invalid');
         }
 
-        await this.sdk.txs.signMessage(messageHash);
-
-        return '0x';
+        const response = await this.sdk.txs.signMessage(messageHash);
+        const signature = 'signature' in response ? response.signature : undefined;
+        return signature || '0x';
       }
 
       case 'eth_signTypedData':
@@ -73,9 +73,9 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
           throw new Error('The address is invalid');
         }
 
-        await this.sdk.txs.signTypedMessage(parsedTypedData);
-
-        return '0x';
+        const response = await this.sdk.txs.signTypedMessage(parsedTypedData);
+        const signature = 'signature' in response ? response.signature : undefined;
+        return signature || '0x';
       }
 
       case 'eth_sendTransaction':
